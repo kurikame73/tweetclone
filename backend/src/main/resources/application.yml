@@ -1,0 +1,26 @@
+spring:
+  profiles:
+    active: aws
+
+  logging:
+    level:
+      root: DEBUG
+      org.springframework.web: DEBUG
+      org.springframework.security: INFO
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/zombie
+    driver-class-name: org.postgresql.Driver
+    username: makisekurisu
+    password: abcd1234
+
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
+    defer-datasource-initialization: true
