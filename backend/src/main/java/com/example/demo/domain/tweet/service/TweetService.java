@@ -17,7 +17,7 @@ public class TweetService {
         return tweetRepository.findAll();
     }
 
-    public Tweet createTweet(@RequestBody Tweet tweet) {
+    public Tweet saveTweet(@RequestBody Tweet tweet) {
         return tweetRepository.save(tweet);
     }
 }

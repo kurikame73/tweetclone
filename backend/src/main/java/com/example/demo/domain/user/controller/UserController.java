@@ -5,6 +5,9 @@ import com.example.demo.domain.user.dto.request.RegisterUserRequestDto;
 import com.example.demo.domain.user.entity.User;
 import com.example.demo.domain.user.repository.UserRepository;
 import com.example.demo.domain.user.service.UserService;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import lombok.RequiredArgsConstructor;
@@ -37,13 +40,16 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginRequestDto dto) {
+    public ResponseEntity<String> login(@RequestBody LoginRequestDto dto, HttpServletRequest request) {
         log.info("id = {}", dto.getLoginId());
         log.info("password = {}", dto.getPassword());
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(dto.getLoginId(), dto.getPassword())
         );
+        log.info("로그인!!!!!!!!!!!! = {}", authentication);
         SecurityContextHolder.getContext().setAuthentication(authentication);
+        HttpSession session = request.getSession(true);
+        session.setAttribute("SPRING_SECURITY_CONTEXT", SecurityContextHolder.getContext());
         return ResponseEntity.ok("User logged in successfully");
     }
 }
